@@ -26,6 +26,7 @@ struct BackgroundView: View {
 
 struct TopView: View {
   @Binding var game: Game
+  @State private var leaderboardIsShown = false
   
   var body: some View {
     HStack {
@@ -35,7 +36,13 @@ struct TopView: View {
         RoundedImageViewStroked(systemName: "arrow.counterclockwise")
       }
       Spacer()
-      RoundedImageViewStroked(systemName: "list.dash")
+      Button(action: {
+        leaderboardIsShown = true
+      }) {
+        RoundedImageViewStroked(systemName: "list.dash")
+      }.sheet(isPresented: $leaderboardIsShown, content: {
+        LeaderboardView(leaderboardIsShown: $leaderboardIsShown, game: $game)
+      })
     }
   }
 }
@@ -71,6 +78,7 @@ struct RingsView: View {
   var body: some View {
     ZStack {
       Color("BackgroundColor")
+        .edgesIgnoringSafeArea(.all)
       ForEach(1..<6) { ring in
         let size = CGFloat(ring * 100)
         let opacity = themeMode == .dark ? 0.1 : 0.3

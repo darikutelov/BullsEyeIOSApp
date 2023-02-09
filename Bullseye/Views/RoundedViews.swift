@@ -71,6 +71,27 @@ struct RoundedNumberViewFilled: View {
   }
 }
 
+struct RoundedTextView: View {
+  var text: String
+  
+  var body: some View {
+    Text(text)
+      .font(.title2)
+      .bold()
+      .foregroundColor(Color("TextColor"))
+      .frame(
+        width: Constants.General.roundedRectViewWidth,
+        height: Constants.General.roundedRectViewHeight
+      )
+      .overlay(
+        Circle()
+          .strokeBorder(
+            Color("RoundedTextStrokeColor"),
+            lineWidth: Constants.General.strokeWidth
+          )
+      )
+  }
+}
 
 struct PreviewView: View {
   var body: some View {
@@ -80,6 +101,7 @@ struct PreviewView: View {
       RoundedImageViewFilled(systemName: "list.dash")
         .padding(.bottom, 50.0)
       RoundedNumberViewFilled(text: "999")
+        RoundedTextView(text: "1")
     }
   }
 }
